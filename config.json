@@ -1,5 +1,5 @@
 {
     "legoStoreLink": "https://lego.storeturkey.com.tr/anahtarlik?ps=100",
-    "checkIntervalAsCron": "* * */4 * * *",
-    "watchlist":["854078","853995"]
+    "checkIntervalAsCron": "0 */4 * * *",
+    "watchlist":["0"]
 }
