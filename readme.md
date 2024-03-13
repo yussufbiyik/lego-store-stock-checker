@@ -31,7 +31,7 @@ $ node index.js <ANAHTARLIK_KODU> <ANAHTARLIK_KODU>
 Bu proje ISC lisansı ile lisanslanmıştır.
 
 ## Yapılacaklar
-[ ] Stok oldukça cihaza bildirim gönderme
+- [ ] Stok oldukça cihaza bildirim gönderme
 
 ## Ekran Görüntüleri
 
