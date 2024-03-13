@@ -30,6 +30,9 @@ $ node index.js <ANAHTARLIK_KODU> <ANAHTARLIK_KODU>
 ## Lisans
 Bu proje ISC lisansı ile lisanslanmıştır.
 
+## Yapılacaklar
+[ ] Stok oldukça cihaza bildirim gönderme
+
 ## Ekran Görüntüleri
 
 ![Her ürünü kontrol ederse.](screenshots/image.png)
