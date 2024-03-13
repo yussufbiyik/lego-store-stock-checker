@@ -44,8 +44,7 @@ function checkKeychains(args) {
                 if(args[0] != 0 && !args.includes(keychainCode)) return;
                 const keyChainPrice = getKeychainPrice($, keychain) || "Fiyat Yok";
                 let isOutOfStock = false;
-                keychainInfoElement.pop(); // Remove "Anahtarlık" word
-                const keychainName = keychainInfoElement.join(" ");
+                const keychainName = getKeychainName(keychainInfoElement);
                 // Check if the keychain is in stocks, not being in stock, 
                 // not being in production are almost the same thing so there's no need to distinguish it.
                 if($(keychain).find('.out-of-stock').length != 0) isOutOfStock = true;
