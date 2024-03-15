@@ -1,5 +1,13 @@
 {
     "legoStoreLink": "https://lego.storeturkey.com.tr/anahtarlik?ps=100",
     "checkIntervalAsCron": "0 */4 * * *",
-    "watchlist":["0"]
+    "vapidDetails":{
+        "publicKey": "BAE0tYlwEWYI2Ll1XH6yRTCfH9ODCIj9-OU-APtVwF3oy8RRUlWke6rqnhu71WFFI-7K1WTeG6ewanHYbEF99Uo",
+        "privateKey": "gBanjZYaV9f19j3WuCR_XAIJE4a2SYlXjVLNTltC-Uc",
+        "mailto": "yussuf.jpeg@gmail.com"
+    },
+    "server": {
+        "port": 8078
+    },
+    "watchlist":["853449"]
 }

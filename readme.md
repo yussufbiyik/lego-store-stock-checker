@@ -31,7 +31,11 @@ $ node index.js <ANAHTARLIK_KODU> <ANAHTARLIK_KODU>
 Bu proje ISC lisansı ile lisanslanmıştır.
 
 ## Yapılacaklar
-- [ ] Stok oldukça cihaza bildirim gönderme
+- [X] Stok oldukça cihaza bildirim gönderme
+- [ ] JWT ile sadece sunucuyu kuran kişinin servise erişmesini sağlama
+- [ ] Dotenv ile önemli bilgilerin gizliliğini sağlama
+- [ ] Firebasee üzerinde çalıştırılabilecek hale getirme
+- [ ] readme dosyasında kullanım üzerine daha fazla detay verme
 
 ## Ekran Görüntüleri
 

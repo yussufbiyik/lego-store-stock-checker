@@ -1,76 +1,47 @@
-const cron = require('node-cron');
-
-const axios = require('axios');
-const cheerio = require('cheerio');
-
+// Load preffered configuration
 const config = require('./config.json');
 const WATCHLIST = config.watchlist;
 const LEGO_STORE_LINK = config.legoStoreLink;
 const CHECK_INTERVAL = config.checkIntervalAsCron;
-
-function getKeychainInfoElement($, element) {
-    return $(element).find(".col.col-12.vitrin-product-name.detailLink").attr("title").split(" ");
-}
-
-function getKeychainCode(keychainInfoElement) {
-    return keychainInfoElement.shift();
-}
-
-function getKeychainName(keychainInfoElement) {
-    keychainInfoElement.pop(); // Remove "Anahtarlık" word
-    return keychainInfoElement.join(" ");
-}
-
-function getKeychainPrice($, element) {
-    return $(element).find(".vitrin-current-price.currentPrice").text().trim().replace("\n", " ") || "Fiyat Yok";
-}
-
-function checkKeychains(args) {
-    const results = []
-    axios.get(LEGO_STORE_LINK)
-        .then(response => {
-            const html = response.data;
-            const $ = cheerio.load(html);
-            // Find all keychains
-            const keychains = $(".col.col-12.hover-box.drop-down.hover");
-            console.log(`${keychains.length} anahtarlık bulundu, ${args.join(",")} kodlu anahtarlıklar aranıyor.`)
-            // Iterate over all keychains
-            keychains.each((index, keychain) => {
-                // Get the full name of the keychain and split it by spaces
-                const keychainInfoElement = getKeychainInfoElement($, keychain);
-                // Remove the first element from the array and assign it to keychainCode
-                const keychainCode = getKeychainCode(keychainInfoElement);
-                // If the keychain code is not in the arguments, skip this iteration
-                if(args[0] != 0 && !args.includes(keychainCode)) return;
-                const keyChainPrice = getKeychainPrice($, keychain) || "Fiyat Yok";
-                let isOutOfStock = false;
-                const keychainName = getKeychainName(keychainInfoElement);
-                // Check if the keychain is in stocks, not being in stock, 
-                // not being in production are almost the same thing so there's no need to distinguish it.
-                if($(keychain).find('.out-of-stock').length != 0) isOutOfStock = true;
-                results.push({ 
-                    "Kod": keychainCode, 
-                    "İsim": keychainName, 
-                    "Fiyat": keyChainPrice,
-                    "Stok Durumu": isOutOfStock ? "Stokta Yok" : "Stokta Var"
-                });
-            });
-            // Print the results as a table
-            console.table(results);
-        })
-        .catch(error => {
-            console.error('Hata:', error);
-        });
-}
+// Load the required modules
+const { initializeExpressServer } = require("./utils/server.js");
+const { initializeWebpush, createNotification, sendNotification } = require("./utils/webpush.js");
+const { checkKeychains } = require("./utils/keychains.js");
+const { getSubscribers } = require('./utils/database.js');
 
 // Get arguments from cli
 const args = process.argv.slice(2);
+// If no arguments are given, start the server and check the watchlist periodically
 if(args.length === 0) {
     console.log("Herhangi bir argüman verilmedi, program izleme listesini kontrol etme modunda çalışıyor.");
-    cron.schedule(CHECK_INTERVAL, () => {
-        console.log('Checking for the keychains...');
-        checkKeychains(WATCHLIST);
+    const cron = require('node-cron');
+    const app = initializeExpressServer();
+    const webpush = initializeWebpush();
+    // Schedule the task
+    cron.schedule("*/10 * * * * *", async () => {
+        console.log('Anahtarlıklar aranıyor...');
+        var results = await checkKeychains(WATCHLIST);
+        if(results.length > 0) {
+            console.table(results);
+            console.log('İzlenen ürünlerden biri veya daha fazlası stokta, bildirim gönderiliyor...');
+            try {
+                getSubscribers().then(subscribers => {
+                    subscribers.forEach(subscriber => {
+                        sendNotification(
+                            JSON.parse(subscriber.subscription), 
+                            createNotification(
+                                "İzleme listenizdeki bir ya da daha fazla anahtarlık stokta!", 
+                                `${results.map(r => r["İsim"]).join(",\n")} stokta!`
+                            )
+                        );
+                    });
+                });
+            } catch (err) {
+                console.error("Bildirim gönderilemedi.", err);
+            }
+        }
     });
     return;
 }
-checkKeychains(args);
+console.log('Anahtarlıklar aranıyor...');
+console.log(checkKeychains(args));

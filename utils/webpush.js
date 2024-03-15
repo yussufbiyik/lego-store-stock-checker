@@ -1,0 +1,56 @@
+// Load preffered configuration
+const config = require('../config.json');
+var webpush;
+
+function createVAPIDKeys() {
+    const webpush = require('web-push');
+    const vapidKeys = webpush.generateVAPIDKeys();
+    console.log("VAPID Keys generated: ", vapidKeys);
+}
+
+const args = process.argv.slice(2);
+if(args[0] === "create") {
+    createVAPIDKeys();
+    return;
+}
+
+function initializeWebpush() {
+    webpush = require('web-push');
+    webpush.setVapidDetails(
+        "mailto:" + config.vapidDetails.mailto,
+        config.vapidDetails.publicKey,
+        config.vapidDetails.privateKey
+    );
+    return webpush;
+}
+
+function createNotification (title, body) {
+    return JSON.stringify({
+        title: title,
+        body: body,
+        // icon: 'images/icon.png',
+        vibrate: [100, 50, 100],
+        data: {
+            dateOfArrival: Date.now(),
+            primaryKey: '2'
+        },
+        actions: [
+            {
+                action: 'explore', 
+                title: 'Satın Al',
+            },
+            {
+                action: 'close', 
+                title: 'Boşver',
+            },
+        ]
+    })
+}
+
+function sendNotification(subscription, notification) {
+    webpush.sendNotification(subscription, notification)
+        .then(() => console.log("Bildirim gönderildi."))
+        .catch(err => console.error("Bildirim gönderilemedi.", err));
+}
+
+module.exports = { initializeWebpush, createNotification, sendNotification };
