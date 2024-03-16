@@ -4,15 +4,14 @@ const WATCHLIST = config.watchlist;
 const LEGO_STORE_LINK = config.legoStoreLink;
 const CHECK_INTERVAL = config.checkIntervalAsCron;
 // Load the required modules
-const { initializeExpressServer } = require("./utils/server.js");
-const { initializeWebpush, createNotification, sendNotification } = require("./utils/webpush.js");
 const { checkKeychains } = require("./utils/keychains.js");
-const { getSubscribers } = require('./utils/database.js');
-
 // Get arguments from cli
 const args = process.argv.slice(2);
 // If no arguments are given, start the server and check the watchlist periodically
 if(args.length === 0) {
+    const { getSubscribers } = require('./utils/database.js');
+    const { initializeExpressServer } = require("./server/server.js");
+    const { initializeWebpush, createNotification, sendNotification } = require("./utils/webpush.js");
     console.log("Herhangi bir argüman verilmedi, program izleme listesini kontrol etme modunda çalışıyor.");
     const cron = require('node-cron');
     const app = initializeExpressServer();

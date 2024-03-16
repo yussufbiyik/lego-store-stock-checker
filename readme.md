@@ -1,6 +1,9 @@
 # Lego Store Stok Kontrolcüsü
 Bu proje, belirli Lego anahtarlıklarının stok durumunu kontrol etmek için oluşturulmuştur. Proje, belirli aralıklarla Lego Store Türkiye'nin web sitesini kontrol eder ve belirli anahtarlıkların stok durumunu kontrol eder.
 
+## Nasıl Çalışır?
+...
+
 ## Kurulum
 Projenin kurulumu için aşağıdaki adımları takip edebilirsiniz:
 
@@ -34,7 +37,7 @@ Bu proje ISC lisansı ile lisanslanmıştır.
 - [X] Stok oldukça cihaza bildirim gönderme
 - [ ] JWT ile sadece sunucuyu kuran kişinin servise erişmesini sağlama
 - [ ] Dotenv ile önemli bilgilerin gizliliğini sağlama
-- [ ] Firebasee üzerinde çalıştırılabilecek hale getirme
+- [ ] Firebase üzerinde çalıştırılabilecek hale getirme
 - [ ] readme dosyasında kullanım üzerine daha fazla detay verme
 
 ## Ekran Görüntüleri

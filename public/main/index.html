@@ -31,7 +31,7 @@
                 });
             })
             .then((subscription) => {
-                axios.post('/subscribe', subscription, {
+                axios.post('/subscribe', {username: "test", password: "test", subscription}, {
                     headers: {
                         'Content-Type': 'application/json'
                     }

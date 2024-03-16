@@ -9,5 +9,6 @@
     "server": {
         "port": 8078
     },
+    "tokenSecret": "değiştirilebilirTokenSecret",
     "watchlist":["853449"]
 }
