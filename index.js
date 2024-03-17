@@ -1,8 +1,6 @@
 // Load preffered configuration
 const config = require('./config.json');
-const WATCHLIST = config.watchlist;
-const LEGO_STORE_LINK = config.legoStoreLink;
-const CHECK_INTERVAL = config.checkIntervalAsCron;
+require('dotenv').config();
 // Load the required modules
 const { checkKeychains } = require("./utils/keychains.js");
 // Get arguments from cli
@@ -18,26 +16,34 @@ if(args.length === 0) {
     const webpush = initializeWebpush();
     // Schedule the task
     cron.schedule("*/10 * * * * *", async () => {
+        // Get subscribers and their watchlists
+        const subscribers = await getSubscribers();
+        const everySubscriberWatchlist = subscribers.map(subscriber => subscriber.watchlist.split(",")).flat();
+        if(everySubscriberWatchlist.length === 0) return console.log("İzleme listesi boş.");
+        console.log("İzleme listesi: ", everySubscriberWatchlist);
         console.log('Anahtarlıklar aranıyor...');
-        var results = await checkKeychains(WATCHLIST);
+        var results = await checkKeychains(everySubscriberWatchlist);
+        // Filter the results to only include the ones that are in stock
+        results = results.filter(result => result["Stok Durumu"] == "Stokta Var");
         if(results.length > 0) {
-            console.table(results);
             console.log('İzlenen ürünlerden biri veya daha fazlası stokta, bildirim gönderiliyor...');
-            try {
-                getSubscribers().then(subscribers => {
-                    subscribers.forEach(subscriber => {
-                        sendNotification(
-                            JSON.parse(subscriber.subscription), 
-                            createNotification(
-                                "İzleme listenizdeki bir ya da daha fazla anahtarlık stokta!", 
-                                `${results.map(r => r["İsim"]).join(",\n")} stokta!`
-                            )
-                        );
-                    });
-                });
-            } catch (err) {
-                console.error("Bildirim gönderilemedi.", err);
-            }
+            // Iterate over the ssubscribers and send a notification
+            subscribers.forEach(subscriber => {
+                if(!results.some(result=>subscriber.watchlist.includes(result["Kod"]))) return;
+                watchedProducts = results.filter(result=>subscriber.watchlist.includes(result["Kod"])).map(result=>result["İsim"]);
+                try {
+                    sendNotification(
+                        JSON.parse(subscriber.subscription), 
+                        createNotification(
+                            "İzleme listenizdeki bir ya da daha fazla anahtarlık stokta!", 
+                            `${watchedProducts.join(",\n")} stokta!`
+                        )
+                    );
+                } catch (err) {
+                    console.error("Bildirim gönderilemedi.", err);
+                }
+            });
+            console.table(results);
         }
     });
     return;

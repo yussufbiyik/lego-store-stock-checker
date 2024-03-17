@@ -1,9 +1,7 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-// Load preffered configuration
-const config = require('../config.json');
-const LEGO_STORE_LINK = config.legoStoreLink;
+const LEGO_STORE_LINK = "https://lego.storeturkey.com.tr/anahtarlik?ps=100";
 
 function getKeychainInfoElement($, element) {
     return $(element).find(".col.col-12.vitrin-product-name.detailLink").attr("title").split(" ");
@@ -30,7 +28,7 @@ async function checkKeychains(args) {
             const $ = cheerio.load(html);
             // Find all keychains
             const keychains = $(".col.col-12.hover-box.drop-down.hover");
-            console.log(`${keychains.length} anahtarlık bulundu, ${args.join(",")} kodlu anahtarlıklar aranıyor.`)
+            console.log(`${keychains.length} anahtarlık bulundu, ${args.join(", ")} kodlu anahtarlıklar aranıyor.`)
             // Iterate over all keychains
             keychains.each((index, keychain) => {
                 // Get the full name of the keychain and split it by spaces

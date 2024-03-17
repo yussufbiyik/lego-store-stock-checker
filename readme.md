@@ -35,8 +35,8 @@ Bu proje ISC lisansı ile lisanslanmıştır.
 
 ## Yapılacaklar
 - [X] Stok oldukça cihaza bildirim gönderme
-- [ ] JWT ile sadece sunucuyu kuran kişinin servise erişmesini sağlama
-- [ ] Dotenv ile önemli bilgilerin gizliliğini sağlama
+- [X] JWT ile ~~sadece sunucuyu kuran kişinin servise erişmesini~~ çoklu kullanıcı erişimi sağlama (aslında hiç gerek yok da, JWT kullanmak istedim.)
+- [X] Dotenv ile önemli bilgilerin gizliliğini sağlama
 - [ ] Firebase üzerinde çalıştırılabilecek hale getirme
 - [ ] readme dosyasında kullanım üzerine daha fazla detay verme
 

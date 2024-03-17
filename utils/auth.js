@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const crypto = require("crypto");
-const tokenSecret = require('../config.json').tokenSecret;
+const tokenSecret = process.env.TOKEN_SECRET || "you-should-change-this";
 
 function generateAccessToken(userCredentials) {    
     return jwt.sign(userCredentials, tokenSecret);

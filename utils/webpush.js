@@ -1,5 +1,3 @@
-// Load preffered configuration
-const config = require('../config.json');
 var webpush;
 
 function createVAPIDKeys() {
@@ -17,9 +15,9 @@ if(args[0] === "create") {
 function initializeWebpush() {
     webpush = require('web-push');
     webpush.setVapidDetails(
-        "mailto:" + config.vapidDetails.mailto,
-        config.vapidDetails.publicKey,
-        config.vapidDetails.privateKey
+        "mailto:" + process.env.MAIL,
+        process.env.PUBLIC_VAPID_KEY,
+        process.env.PRIVATE_VAPID_KEY
     );
     return webpush;
 }

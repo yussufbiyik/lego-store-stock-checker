@@ -6,7 +6,7 @@ const db = new sqlite.Database(path.resolve(__dirname, '../server/database/datab
 function flushDatabase() {
     db.serialize(() => {
         db.run("DROP TABLE IF EXISTS users");
-        db.run("CREATE TABLE users (username, password, role, subscription)");
+        db.run("CREATE TABLE users (username, password, role, subscription, watchlist)");
     });
 }
 
@@ -24,7 +24,7 @@ function addSubscriber(req, res) {
         db.serialize(() => {
             const password = hashPassword(req.body.username, req.body.password);
             console.log("Adding subscriber: ", req.body.subscibtion);
-            db.run(`INSERT INTO users (username, password, role, subscription) VALUES (?, ?, ?, ?)`, [req.body.username, password, "subscriber", JSON.stringify(req.body.subscription)], (err) => { console.error(err);return; });
+            db.run(`INSERT INTO users (username, password, role, subscription, watchlist) VALUES (?, ?, ?, ?, ?)`, [req.body.username, password, "subscriber", JSON.stringify(req.body.subscription), req.body.watchlist], (err) => { console.error(err);return; });
             console.log("Subscriber added.");
             res.status(200).send("Subscriber added.");
         });

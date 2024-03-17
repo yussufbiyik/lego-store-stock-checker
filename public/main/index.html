@@ -4,8 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lego Anahtarlık Stok Kontrolcüsü</title>
+    <link rel="stylesheet" href="./main/style.css">
 </head>
 <body>
+    <section class="center">
+        <h1>Lego Anahtarlık Stok Kontrolcüsü</h1>
+        <p>Ürün stoklarını kontrol etmek için lütfen kayıt olunuz.</p>
+        <form>
+            <label for="username">Kullanıcı Adı</label>
+            <input id="username" type="text" name="username" placeholder="Kullanıcı Adı" required>
+            <label for="password">Şifre</label>
+            <input id="password" type="password" name="password" placeholder="Şifre" required>
+            <label for="watchlist">İzlemek istediğiniz ürünlerin kodları</label>
+            <input id="watchlist" type="text" name="watchlist" placeholder="Kodlar arası boşluk bırakın" required>
+        </form>
+        <button id="register-button">Kayıt Ol</button>
+        <p>Aslında kayıt olmaya gerek olmayabilirdi ama JWT kullanmak istedim.</p>
+    </section>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         // https://gist.github.com/Klerith/80abd742d726dd587f4bd5d6a0ab26b6
@@ -23,20 +38,25 @@
             }
             return outputArray;
         }
-        navigator.serviceWorker.register('./main/sw.js')
-            .then((registration) => {
-                return registration.pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: urlBase64ToUint8Array('BAE0tYlwEWYI2Ll1XH6yRTCfH9ODCIj9-OU-APtVwF3oy8RRUlWke6rqnhu71WFFI-7K1WTeG6ewanHYbEF99Uo')
+        document.querySelector("#register-button").onclick = (e) => {
+            const username = document.querySelector("input[name='username']").value;
+            const password = document.querySelector("input[name='password']").value;
+            const watchlist = document.querySelector("input[name='watchlist']").value.split(" ").join(",");
+            navigator.serviceWorker.register('./main/sw.js')
+                .then((registration) => {
+                    return registration.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: urlBase64ToUint8Array('BAE0tYlwEWYI2Ll1XH6yRTCfH9ODCIj9-OU-APtVwF3oy8RRUlWke6rqnhu71WFFI-7K1WTeG6ewanHYbEF99Uo')
+                    });
+                })
+                .then((subscription) => {
+                    axios.post('/subscribe', {username, password, subscription, watchlist}, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
                 });
-            })
-            .then((subscription) => {
-                axios.post('/subscribe', {username: "test", password: "test", subscription}, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-            });
+        }
     </script>
 </body>
 </html>
