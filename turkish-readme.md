@@ -46,8 +46,8 @@ sequenceDiagram
 ```
 
 ## Özellikler
-- [CLI ile kullanım](https://github.com/yussufbiyik/lego-store-stock-checker/blob/main/turkish-readme.md#sunucu-olarak-kullan%C4%B1m)
-- [Sunucu olarak kullanım](https://github.com/yussufbiyik/lego-store-stock-checker/blob/main/turkish-readme.md#tek-seferlik-kullan%C4%B1m-cli)
+- [CLI ile kullanım](https://github.com/yussufbiyik/lego-store-stock-checker/blob/main/turkish-readme.md#tek-seferlik-kullan%C4%B1m-cli)
+- [Sunucu olarak kullanım](https://github.com/yussufbiyik/lego-store-stock-checker/blob/main/turkish-readme.md#sunucu-olarak-kullan%C4%B1m)
     - Belirli aralıklarla stok kontrol etme
         - Stok olunca bildirim gönderme
     - Birden fazla kullanıcı desteği

@@ -45,8 +45,8 @@ sequenceDiagram
 ```
 
 ## Özellikler
-- [CLI Mode](https://github.com/yussufbiyik/lego-store-stock-checker#using-cli)
-- [Server Mode](https://github.com/yussufbiyik/lego-store-stock-checker#using-as-a-server)
+- [CLI Mode](https://github.com/yussufbiyik/lego-store-stock-checker?tab=readme-ov-file#using-cli)
+- [Server Mode](https://github.com/yussufbiyik/lego-store-stock-checker?tab=readme-ov-file#using-as-a-server)
     - Scheduled cron jobs to check the stock in regular intervals
         - Sending push notifications if a product is in stock
     - Multiple user support
