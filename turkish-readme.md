@@ -19,8 +19,8 @@ graph TD;
     end
     subgraph Sunucu Modu
     B --> |Verilmedi, sunucuyu başlat| E[Sunucu]
-    subgraph Kullanıcı-Sunucu Etkileşimleri
-    F[Kullanıcı] --> |/subscribe| E
+    subgraph Abone-Sunucu Etkileşimleri
+    F[Abone] --> |/subscribe| E
     E --> |/subscribe| I[(Veritabanı)]
     end
     subgraph CRON Job
@@ -33,16 +33,16 @@ graph TD;
     end
     end
 ```
-### Sunucu ve Kullanıcı Etkileşimi
+### Sunucu ve Abone Etkileşimi
 ```mermaid
 sequenceDiagram
-    actor Kullanıcı
-    Note over Kullanıcı,Sunucu: Kayıt Sayfası
-    Kullanıcı->>+Sunucu: /
-    Sunucu-->>Kullanıcı: Kayıt Sayfası
-    Note over Kullanıcı,Sunucu: Abone Olma
-    Kullanıcı->>+Sunucu: /subscribe
-    Sunucu-->>Kullanıcı: 200, Abone Eklendi
+    actor Abone
+    Note over Abone,Sunucu: Kayıt Sayfası
+    Abone->>+Sunucu: /
+    Sunucu-->>Abone: Kayıt Sayfası
+    Note over Abone,Sunucu: Abone Olma
+    Abone->>+Sunucu: /subscribe
+    Sunucu-->>Abone: 200, Abone Eklendi
 ```
 
 ## Özellikler
@@ -50,7 +50,7 @@ sequenceDiagram
 - [Sunucu olarak kullanım](https://github.com/yussufbiyik/lego-store-stock-checker/blob/main/turkish-readme.md#sunucu-olarak-kullan%C4%B1m)
     - Belirli aralıklarla stok kontrol etme
         - Stok olunca bildirim gönderme
-    - Birden fazla kullanıcı desteği
+    - Birden fazla abone desteği
         - Güvenli şifre saklama (JWT)
 
 ## Kurulum
@@ -84,7 +84,7 @@ CRON_INTERVAL = "0 */4 * * *"
 Tırnak içindeki kısımları kendi bilgilerinizle doldurun, PORT'u da istediğiniz gibi değişirebilirisiniz.
 
 ## Sunucu Olarak Kullanım
-Kontrol edilecek anahtarlıkların listesi argüman olarak verilir, eğer verilmezse sunucu çalışır ve izleme listesi kullanıcıların izleme listesi baz alınarak oluşturulur.
+Kontrol edilecek anahtarlıkların listesi argüman olarak verilir, eğer verilmezse sunucu çalışır ve izleme listesi Aboneların izleme listesi baz alınarak oluşturulur.
 
 Kontrol sıklığı .env dosyasında CRON_INTERVAL olarak belirtilmiştir, [Buraya](https://www.npmjs.com/package/node-cron#cron-syntax) bakarak istediğiniz sıklığı ayarlayabilirsiniz.
 Varsayılan 4 saatte bir kontrol etmektir. 
@@ -112,7 +112,7 @@ Bu proje ISC lisansı ile lisanslanmıştır.
 
 ## Yapılacaklar
 - [X] Stok oldukça cihaza bildirim gönderme
-- [X] JWT ile ~~sadece sunucuyu kuran kişinin servise erişmesini~~ çoklu kullanıcı erişimi sağlama (aslında hiç gerek yok da, JWT kullanmak istedim.)
+- [X] JWT ile ~~sadece sunucuyu kuran kişinin servise erişmesini~~ çoklu Abone erişimi sağlama (aslında hiç gerek yok da, JWT kullanmak istedim.)
 - [X] Dotenv ile önemli bilgilerin gizliliğini sağlama
 - [ ] Firebase üzerinde çalıştırılabilecek hale getirme
 - [X] readme dosyasında kullanım üzerine daha fazla detay verme

@@ -1,7 +1,7 @@
 # Lego Store Stock Checker
 This project is made to check the stock of Lego Store Turkey, it offers two modes:
 1. CLI mode, which works by looking for keychains that are given as arguments when starting the project.
-2. Server mode, which works by checking keychains and sending push notifications using webpush to users (subscribers) which are registered using `/subscribe` endpoint and being stored in an sqlite database.
+2. Server mode, which works by checking keychains and sending push notifications using webpush to subscribers which are registered using `/subscribe` endpoint and being stored in an sqlite database.
 
 ## Tech Stack
 [![Tech Stack](https://skillicons.dev/icons?i=nodejs,express,sqlite)](https://skillicons.dev)
@@ -18,8 +18,8 @@ graph TD;
     end
     subgraph Server Mode
     B --> |No, start the server| E[Server]
-    subgraph User-Server Interactions
-    F[User] --> |/subscribe| E
+    subgraph Subscriber-Server Interactions
+    F[Subscriber] --> |/subscribe| E
     E --> |/subscribe| I[(Database)]
     end
     subgraph CRON Job
@@ -32,16 +32,16 @@ graph TD;
     end
     end
 ```
-### Server and User Interaction
+### Server and Subscriber Interaction
 ```mermaid
 sequenceDiagram
-    actor User
-    Note over User,Server: Register Page
+    actor Subscriber
+    Note over Subscriber,Server: Register Page
     User->>+Server: /
-    Server-->>User: Register Page
-    Note over User,Server: Subscribe
-    User->>+Server: /subscribe
-    Server-->>User: 200, Added subscriber
+    Server-->>Subscriber: Register Page
+    Note over Subscriber,Server: Subscribe
+    Subscriber->>+Server: /subscribe
+    Server-->>Subscriber: 200, Added subscriber
 ```
 
 ## Özellikler
@@ -49,7 +49,7 @@ sequenceDiagram
 - [Server Mode](https://github.com/yussufbiyik/lego-store-stock-checker?tab=readme-ov-file#using-as-a-server)
     - Scheduled cron jobs to check the stock in regular intervals
         - Sending push notifications if a product is in stock
-    - Multiple user support
+    - Multiple subscriber support
         - Safe password storage & Authentication
 
 ## Setup
@@ -81,7 +81,7 @@ CRON_INTERVAL = "0 */4 * * *"
 Change all the values.
 
 ## Using as a Server
-Watchlist is constructed by itrating over all users and pushing their watchlist to an array and flattening it later.
+Watchlist is constructed by itrating over all subscribers and pushing their watchlist to an array and flattening it later.
 
 The way the cron job is scheduled is assigned to CRON_INTERVAL in the `.env` file, [Refer](https://www.npmjs.com/package/node-cron#cron-syntax) to here to change thee interval as you wish.
 Default is once every 4 hours. 
