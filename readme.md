@@ -16,8 +16,8 @@ graph TD;
 ```
 
 ## Özellikler
-- [CLI ile kullanım](https://github.com/yussufbiyik/lego-store-stock-checker?tab=readme-ov-file#Tek%20Seferlik%20Kullan%C4%B1m%20%28CLI%29)
-- [Sunucu olarak kullanım](https://github.com/yussufbiyik/lego-store-stock-checker?tab=readme-ov-file#Sunucu%20Olarak%20Kullan%C4%B1m)
+- [CLI ile kullanım](https://github.com/yussufbiyik/lego-store-stock-checker?tab=readme-ov-file#tek-seferlik-kullan%C4%B1m-cli)
+- [Sunucu olarak kullanım](https://github.com/yussufbiyik/lego-store-stock-checker?tab=readme-ov-file#sunucu-olarak-kullan%C4%B1m)
     - Belirli aralıklarla stok kontrol etme
         - Stok olunca bildirim gönderme
     - Birden fazla kullanıcı desteği
