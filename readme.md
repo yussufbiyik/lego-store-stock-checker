@@ -5,14 +5,33 @@ Bu proje, belirli Lego anahtarlıklarının stok durumunu kontrol etmek için ol
 [![Tech Stack](https://skillicons.dev/icons?i=nodejs,express,sqlite)](https://skillicons.dev)
 
 ## Nasıl Çalışır?
+
+### Akış Diyagramı
+Özetle:
 ```mermaid
 graph TD;
-    A[Başla] --> B{Lego Store Türkiye'yi Kontrol Et};
-    B -->|Aranan anahtarlık stokta| C[Bildirim gönder];
-    B -->|Aranan anahtarlık stokta değil| E;
-    C --> E[Sonraki Seferi Bekle];
-    D --> B;
-    E --> B;
+    A[Başla] --> B{Çalıştırılırken Argüman Verildi Mi?}
+    B --> |Verildi| C[[Argümanlardaki ürün kodlarını al]]
+    C --> D[Lego Store Türkiye'yi Kontrol Et]
+    B --> |Verilmedi, sunucuyu başlat| E[Sunucu]
+    F[Kullanıcı] --> |/subscribe| E
+    E --> |/subscribe| I[(Veritabanı)]
+    E --> G[Kontrol zamanının gelmesini bekle]
+    G --> H[Abonelerden izleme listesi için ürün kodlarını al]
+    H --> D
+    D --> |Sunucu modundaysa| J[Her abone için istedikleri ürün stokta ise bildirim gönder]
+    J --> G
+```
+### Verittabanı ve Kullanıcı Etkileşimi
+```mermaid
+sequenceDiagram
+    actor Kullanıcı
+    Note over Kullanıcı,Sunucu: Kayıt Sayfası
+    Kullanıcı->>+Sunucu: /
+    Sunucu-->>Kullanıcı: Giriş Sayfası
+    Note over Kullanıcı,Sunucu: Abone Olma
+    Kullanıcı->>+Sunucu: /subscribe
+    Sunucu-->>Kullanıcı: 200, Abone Eklendi
 ```
 
 ## Özellikler
