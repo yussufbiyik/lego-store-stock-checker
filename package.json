@@ -1,7 +1,7 @@
 {
   "name": "lego-store-stock-checker",
   "version": "1.0.0",
-  "description": "Lego Store Turkey'deki anahtarlık stoklarını ttakip etmek için geliştirdiğim ufak bir yazılım.",
+  "description": "Lego Store Turkey'deki anahtarlık stoklarını takip etmek için geliştirdiğim ufak bir yazılım.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

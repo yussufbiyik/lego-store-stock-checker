@@ -26,7 +26,7 @@ function createNotification (title, body) {
     return JSON.stringify({
         title: title,
         body: body,
-        // icon: 'images/icon.png',
+        icon: '../public/assets/LEGO_logo.svg.png',
         vibrate: [100, 50, 100],
         data: {
             dateOfArrival: Date.now(),

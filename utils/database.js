@@ -20,13 +20,13 @@ if(args[0] === "flush") {
 function addSubscriber(req, res) {
     db.get("SELECT * FROM users WHERE subscription = ?", [JSON.stringify(req.body.subscription)], (err, row) => {
         if(err) return console.error(err);
-        if(row != undefined) return console.error("Subscriber already exists.");
+        if(row != undefined) return res.status(400).send("Bu abonelik zaten var.");
         db.serialize(() => {
             const password = hashPassword(req.body.username, req.body.password);
-            console.log("Adding subscriber: ", req.body.subscibtion);
+            console.log("Abone ekleniyor...");
             db.run(`INSERT INTO users (username, password, role, subscription, watchlist) VALUES (?, ?, ?, ?, ?)`, [req.body.username, password, "subscriber", JSON.stringify(req.body.subscription), req.body.watchlist], (err) => { console.error(err);return; });
-            console.log("Subscriber added.");
-            res.status(200).send("Subscriber added.");
+            console.log("Abone eklendi.");
+            res.status(200).send("Abone eklendi.");
         });
     })
 }
