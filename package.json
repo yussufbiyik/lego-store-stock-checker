@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node index.js",
     "flushDb": "node ./utils/database.js flush",
-    "createDb": "node ./utils/database.js create",
     "createVAPID": "node ./utils/webpush.js create"
   },
   "author": "Yusuf Bıyık",
