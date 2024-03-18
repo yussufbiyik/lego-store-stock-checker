@@ -40,11 +40,14 @@ graph TD;
 sequenceDiagram
     actor Subscriber
     Note over Subscriber,Server: Register Page
-    User->>+Server: /
+    Subscriber->>+Server: /
     Server-->>Subscriber: Register Page
     Note over Subscriber,Server: Subscribe
     Subscriber->>+Server: /subscribe
     Server-->>Subscriber: 200, Added subscriber
+    Note over Subscriber,Server: Look through a watchlist on request
+    Subscriber->>+Server: /check
+    Server-->>Subscriber: Result(JSON)
 ```
 
 ## Özellikler

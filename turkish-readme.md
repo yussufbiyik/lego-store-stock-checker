@@ -46,6 +46,9 @@ sequenceDiagram
     Note over Abone,Sunucu: Abone Olma
     Abone->>+Sunucu: /subscribe
     Sunucu-->>Abone: 200, Abone Eklendi
+    Note over Abone,Sunucu: İstek üzerine bir izleme listesini kontrol et
+    Abone->>+Sunucu: /check
+    Sunucu-->>Abone: Yanıt (JSON)
 ```
 
 ## Özellikler
