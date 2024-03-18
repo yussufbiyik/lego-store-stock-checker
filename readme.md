@@ -21,6 +21,7 @@ graph TD;
     H --> D
     D --> |Sunucu modundaysa| J[Her abone için istedikleri ürün stokta ise bildirim gönder]
     J --> G
+    D --> |Suncuu modunda değilse| K[Bitir]
 ```
 ### Veritabanı ve Kullanıcı Etkileşimi
 ```mermaid
