@@ -11,18 +11,26 @@ Bu proje, belirli Lego anahtarlıklarının stok durumunu kontrol etmek için ol
 ```mermaid
 graph TD;
     A[Başla] --> B{Çalıştırılırken Argüman Verildi Mi?}
+    subgraph Komut Satırı Modu
     B --> |Verildi| C[[Argümanlardaki ürün kodlarını al]]
     C --> D[Lego Store Türkiye'yi Kontrol Et]
     D --> L[Çıktıyı konsola yazdır]
     L --> M[Bitir]
+    end
+    subgraph Sunucu Modu
     B --> |Verilmedi, sunucuyu başlat| E[Sunucu]
-    E --> G[Kontrol zamanının gelmesini bekle]
+    subgraph Kullanıcı-Sunucu Etkileşimleri
     F[Kullanıcı] --> |/subscribe| E
     E --> |/subscribe| I[(Veritabanı)]
+    end
+    subgraph Rutin İşlemler
+    E --> G[Kontrol zamanının gelmesini bekle]
     G --> J[Abonelerden izleme listesi için ürün kodlarını al]
     I --> |getSubscribers| J
     N --> G
     J --> N[Lego Store Türkiye'yi Kontrol Et]
+    end
+    end
 ```
 ### Sunucu ve Kullanıcı Etkileşimi
 ```mermaid
