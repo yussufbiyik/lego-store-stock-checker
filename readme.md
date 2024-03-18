@@ -57,7 +57,7 @@ Terminalde
 ```bash
 $ npm run createVAPID
 ```
-komutunu çalıştırın ve çıktıyı kaydedin, .env dosyasında bildirim göndermek için lazım olacak.
+komutunu çalıştırın ve çıktıyı kaydedin, .env dosyasında bildirim göndermek için `PUBLIC_VAPID_KEY` ve `PRIVATE_VAPID_KEY`'in değerleri buradan geliyor.
 
 ### .env Dosyası Oluşturma
 ```env
@@ -72,6 +72,7 @@ PORT=3000
 # Sunucunun kontrol aralığı (node-cron'un istediği formatta olmalı)
 CRON_INTERVAL = "0 */4 * * *"
 ```
+Tırnak içindeki kısımları kendi bilgilerinizle doldurun, PORT'u da istediğiniz gibi değişirebilirisiniz.
 
 ## Sunucu Olarak Kullanım
 Kontrol edilecek anahtarlıkların listesi argüman olarak verilir, eğer verilmezse sunucu çalışır ve izleme listesi kullanıcıların izleme listesi baz alınarak oluşturulur.
