@@ -1,121 +1,118 @@
-# Lego Store Stok Kontrolcüsü
-Bu proje, belirli Lego anahtarlıklarının stok durumunu kontrol etmek için oluşturulmuştur. Proje, belirli aralıklarla Lego Store Türkiye'nin web sitesini kontrol eder ve belirli anahtarlıkların stok durumunu kontrol eder.
+# Lego Store Stock Checker
+This project is made to check the stock of Lego Store Turkey, it offers two modes:
+1. CLI mode, which works by looking for keychains that are given as arguments when starting the project.
+2. Server mode, which works by checking keychains and sending push notifications using webpush to users (subscribers) which are registered using `/subscribe` endpoint and being stored in an sqlite database.
 
-## Kullanılan Teknolojiler
+## Tech Stack
 [![Tech Stack](https://skillicons.dev/icons?i=nodejs,express,sqlite)](https://skillicons.dev)
 
-## Nasıl Çalışır?
-
-### Akış Diyagramı
-Özetle:
+### Flowchart
 ```mermaid
 graph TD;
-    A[Başla] --> B{Çalıştırılırken Argüman Verildi Mi?}
-    subgraph Komut Satırı Modu
-    B --> |Verildi| C[[Argümanlardaki ürün kodlarını al]]
-    C --> D[Lego Store Türkiye'yi Kontrol Et]
-    D --> L[Çıktıyı konsola yazdır]
-    L --> M[Bitir]
+    A[Start] --> B{Are there any given arguments on start?}
+    subgraph CLI Mode
+    B --> |Yes| C[[Get keychain codes from arguments]]
+    C --> D[Check Lego Store Turkey]
+    D --> L[Print the output]
+    L --> M[End]
     end
-    subgraph Sunucu Modu
-    B --> |Verilmedi, sunucuyu başlat| E[Sunucu]
-    subgraph Kullanıcı-Sunucu Etkileşimleri
-    F[Kullanıcı] --> |/subscribe| E
-    E --> |/subscribe| I[(Veritabanı)]
+    subgraph Server Mode
+    B --> |No, start the server| E[Server]
+    subgraph User-Server Interactions
+    F[User] --> |/subscribe| E
+    E --> |/subscribe| I[(Database)]
     end
-    subgraph Rutin İşlemler
-    E --> G[Kontrol zamanının gelmesini bekle]
-    G --> J[Abonelerden izleme listesi için ürün kodlarını al]
+    subgraph CRON Job
+    E --> G[Wait for the scheduled cron job to begin]
+    G --> J[Get keychain codes from subscribers' watchlists]
     I --> |getSubscribers| J
-    N --> G
-    J --> N[Lego Store Türkiye'yi Kontrol Et]
+    J --> N[Check Lego Store Turkey]
+    N --> K[Iterate through subscribers and send notifications to each hat are looking for a product on the list]
+    K --> G
     end
     end
 ```
-### Sunucu ve Kullanıcı Etkileşimi
+### Server and User Interaction
 ```mermaid
 sequenceDiagram
-    actor Kullanıcı
-    Note over Kullanıcı,Sunucu: Kayıt Sayfası
-    Kullanıcı->>+Sunucu: /
-    Sunucu-->>Kullanıcı: Giriş Sayfası
-    Note over Kullanıcı,Sunucu: Abone Olma
-    Kullanıcı->>+Sunucu: /subscribe
-    Sunucu-->>Kullanıcı: 200, Abone Eklendi
+    actor User
+    Note over User,Server: Register Page
+    User->>+Server: /
+    Server-->>User: Register Page
+    Note over User,Server: Subscribe
+    User->>+Server: /subscribe
+    Server-->>User: 200, Added subscriber
 ```
 
 ## Özellikler
-- [CLI ile kullanım](https://github.com/yussufbiyik/lego-store-stock-checker?tab=readme-ov-file#tek-seferlik-kullan%C4%B1m-cli)
-- [Sunucu olarak kullanım](https://github.com/yussufbiyik/lego-store-stock-checker?tab=readme-ov-file#sunucu-olarak-kullan%C4%B1m)
-    - Belirli aralıklarla stok kontrol etme
-        - Stok olunca bildirim gönderme
-    - Birden fazla kullanıcı desteği
-        - Güvenli şifre saklama (JWT)
+- [CLI Mode](https://github.com/yussufbiyik/lego-store-stock-checker?tab=readme-ov-file#tek-seferlik-kullan%C4%B1m-cli)
+- [Server Mode](https://github.com/yussufbiyik/lego-store-stock-checker?tab=readme-ov-file#sunucu-olarak-kullan%C4%B1m)
+    - Scheduled cron jobs to check the stock in regular intervals
+        - Sending push notifications if a product is in stock
+    - Multiple user support
+        - Safe password storage & Authentication
 
-## Kurulum
-Projenin kurulumu için aşağıdaki adımları takip edebilirsiniz:
+## Setup
+1. Clone or download the project.
+2. Open the project directory in terminal.
+3. Run `npm install` command and download the project dependencies.
+4. Only required for server mode, create a file named `.env`, this will store our secrets.
 
-1. Projeyi klonlayın veya indirin.
-2. Terminalde proje klasörüne gidin.
-3. ```npm install``` komutunu çalıştırın. projenin çalışması için gerekli olan paketler yüklenecektir.
-4. Sadece sunucu modu için gerekli! Bir sonraki başlığı takip edin ve `.env` dosyasını oluşturun.
-
-### Vapid Key Oluşturma
-Terminalde
+### Creating VAPID Keys
+Run
 ```bash
 $ npm run createVAPID
 ```
-komutunu çalıştırın ve çıktıyı kaydedin, .env dosyasında bildirim göndermek için `PUBLIC_VAPID_KEY` ve `PRIVATE_VAPID_KEY`'in değerleri buradan geliyor.
+command on terminal al save the response, the `PUBLIC_VAPID_KEY` and `PRIVATE_VAPID_KEY` values in `.env` comes from here.
 
-### .env Dosyası Oluşturma
+### Creating .env File
 ```env
 # WEBPUSH CONFIG
 PUBLIC_VAPID_KEY="Public VAPID Key" 
 PRIVATE_VAPID_KEY="Private VAPID Key"
-MAIL="E-Postanız"
+MAIL="Your E-Mail"
 # JWT CONFIG
-TOKEN_SECRET="JWT için paylaşılmaması gereken bir kod, kafanıza göre bir metin yazın."
+TOKEN_SECRET="Random secret code that should not be shared, type whateveer you want to."
 # SERVER CONFIG
 PORT=3000
-# Sunucunun kontrol aralığı (node-cron'un istediği formatta olmalı)
+# Interval of the CRON Job
 CRON_INTERVAL = "0 */4 * * *"
 ```
-Tırnak içindeki kısımları kendi bilgilerinizle doldurun, PORT'u da istediğiniz gibi değişirebilirisiniz.
+Change all the values.
 
-## Sunucu Olarak Kullanım
-Kontrol edilecek anahtarlıkların listesi argüman olarak verilir, eğer verilmezse sunucu çalışır ve izleme listesi kullanıcıların izleme listesi baz alınarak oluşturulur.
+## Using as a Server
+Watchlist is constructed by itrating over all users and pushing their watchlist to an array and flattening it later.
 
-Kontrol sıklığı .env dosyasında CRON_INTERVAL olarak belirtilmiştir, [Buraya](https://www.npmjs.com/package/node-cron#cron-syntax) bakarak istediğiniz sıklığı ayarlayabilirsiniz.
-Varsayılan 4 saatte bir kontrol etmektir. 
+The way the cron job is scheduled is assigned to CRON_INTERVAL in the `.env` file, [Refer](https://www.npmjs.com/package/node-cron#cron-syntax) to here to change thee interval as you wish.
+Default is once every 4 hours. 
 
-Sunucu 
+Run
 ```bash
 $ npm start
 ``` 
-komutu ile çalıştırılabilir.
+command on terminal to start the server.
 
-### Sunucuya Kayıt Olmak
-`localhost:PORT`* adresini ziyaret ederseniz ana sayfa ile karşılaşacaksınız, buradan herhangi bir isim ve şifre ile kaydolabilirsiniz, isim ve şifrenin bir önemi yok tamamken keyfi olarak ekledim.
+### Registering to the Server
+You'll be greeted by the register page if you visit `localhost:PORT`*, you can register with any username and password and make sure to fill the form with your watchlist.
 
-*: PORT, .env dosyasında belirlenir, belirlenmezse varsayılan port 3000'dir
+*: PORT, is determined in `.env` file, default is 3000
 
-## Tek Seferlik Kullanım (CLI)
-Eğer sadece belirli ürünlere bakmak istiyorsanız (her ürünü kontrol için anahtar kodu olarak 0 yazmalısınız) terminale:
+## Using CLI
+If you don't want need scheduled checks, just use this in the following format (pass 0 as keychain code to get all the keychains):
 ```bash
-$ npm start <ANAHTARLIK_KODU> <ANAHTARLIK_KODU>
-```
-formatında komutunuzu yazarak istediğiniz kadar anahtarlık koduna bakabilirsiniz. 
+$ npm start <KEYCHAIN_CODE> <KEYCHAIN_CODE>
+``` 
 
-## Lisans
-Bu proje ISC lisansı ile lisanslanmıştır.
+## LISENCE
+ISC
 
-## Yapılacaklar
+## TODOs
 - [X] Stok oldukça cihaza bildirim gönderme
 - [X] JWT ile ~~sadece sunucuyu kuran kişinin servise erişmesini~~ çoklu kullanıcı erişimi sağlama (aslında hiç gerek yok da, JWT kullanmak istedim.)
 - [X] Dotenv ile önemli bilgilerin gizliliğini sağlama
 - [ ] Firebase üzerinde çalıştırılabilecek hale getirme
 - [X] readme dosyasında kullanım üzerine daha fazla detay verme
 
-## Ekran Görüntüleri
+## Screenshots
 ![Her ürünü kontrol ederse.](screenshots/cli.png)
 ![Sunucu tarafından ekran görüntüsü.](screenshots/serverside.png)
