@@ -20,7 +20,10 @@ graph TD;
     B --> |No, start the server| E[Server]
     subgraph Subscriber-Server Interactions
     F[Subscriber] --> |/subscribe| E
+    F --> |/check| E
     E --> |/subscribe| I[(Database)]
+    E --> |/check| J
+    J --> |/check response| F
     end
     subgraph CRON Job
     E --> G[Wait for the scheduled cron job to begin]

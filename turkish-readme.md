@@ -22,6 +22,9 @@ graph TD;
     subgraph Abone-Sunucu Etkileşimleri
     F[Abone] --> |/subscribe| E
     E --> |/subscribe| I[(Veritabanı)]
+    F --> |/check| E
+    E --> |/check| J
+    J --> |/check response| F
     end
     subgraph CRON Job
     E --> G[Kontrol zamanının gelmesini bekle]

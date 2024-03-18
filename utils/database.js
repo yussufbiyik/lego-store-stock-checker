@@ -1,12 +1,12 @@
 const path = require('path');
-const { hashPassword } = require('./auth');
+const { hashPassword, generateAccessToken } = require('./auth');
 const sqlite = require('sqlite3').verbose();
 const db = new sqlite.Database(path.resolve(__dirname, '../server/database/database.db'), sqlite.OPEN_READWRITE, (err) => {if (err) return console.error(err);});
 
 function flushDatabase() {
     db.serialize(() => {
         db.run("DROP TABLE IF EXISTS subscribers");
-        db.run("CREATE TABLE subscribers (username, password, role, subscription, watchlist)");
+        db.run("CREATE TABLE subscribers (username, password, role, subscription, token, watchlist)");
     });
 }
 
@@ -23,10 +23,13 @@ function addSubscriber(req, res) {
         if(row != undefined) return res.status(400).send("Bu abonelik zaten var.");
         db.serialize(() => {
             const password = hashPassword(req.body.username, req.body.password);
-            console.log("Abone ekleniyor...");
-            db.run(`INSERT INTO subscribers (username, password, role, subscription, watchlist) VALUES (?, ?, ?, ?, ?)`, [req.body.username, password, "subscriber", JSON.stringify(req.body.subscription), req.body.watchlist], (err) => { console.error(err);return; });
+            const accessToken = generateAccessToken(req.body.username);
+            db.run(`INSERT INTO subscribers (username, password, role, subscription, token, watchlist) VALUES (?, ?, ?, ?, ?, ?)`, [req.body.username, password, "subscriber", JSON.stringify(req.body.subscription), accessToken, req.body.watchlist], (err) => { console.error(err);return; });
             console.log("Abone eklendi.");
-            res.status(200).send("Abone eklendi.");
+            res.status(200).json({
+                message: "Abone eklendi.",
+                token: accessToken
+            });
         });
     })
 }
