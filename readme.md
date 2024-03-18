@@ -19,9 +19,11 @@ graph TD;
     E --> G[Kontrol zamanının gelmesini bekle]
     G --> H[Abonelerden izleme listesi için ürün kodlarını al]
     H --> D
-    D --> |Sunucu modundaysa| J[Her abone için istedikleri ürün stokta ise bildirim gönder]
-    J --> G
-    D --> |Suncuu modunda değilse| K[Bitir]
+    D --> |Sunucu modundaysa| J[Aboneleri Al]
+    I --> J
+    J --> K[Her abone için istedikleri ürün stokta ise bildirim gönder]
+    K --> G
+    D --> |Sunucu modunda değilse| L[Bitir]
 ```
 ### Veritabanı ve Kullanıcı Etkileşimi
 ```mermaid
