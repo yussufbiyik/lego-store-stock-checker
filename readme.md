@@ -24,7 +24,7 @@ graph TD;
     N --> G
     J --> N[Lego Store Türkiye'yi Kontrol Et]
 ```
-### Veritabanı ve Kullanıcı Etkileşimi
+### Sunucu ve Kullanıcı Etkileşimi
 ```mermaid
 sequenceDiagram
     actor Kullanıcı
