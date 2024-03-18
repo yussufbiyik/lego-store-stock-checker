@@ -30,7 +30,7 @@ graph TD;
     E --> G[Kontrol zamanının gelmesini bekle]
     G --> J[Abonelerden izleme listesi için ürün kodlarını al]
     I --> |getSubscribers| J
-    J --> N[Check Lego Store Turkey]
+    J --> N[Lego Store Türkiye'yi Kontrol Et]
     N --> K[Abonelerin her birini kontrol et ve izleme listelerindeki bir ürün stoktaysa bildirim gönder]
     K --> G
     end
