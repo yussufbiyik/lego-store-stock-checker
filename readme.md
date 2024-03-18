@@ -13,18 +13,16 @@ graph TD;
     A[Başla] --> B{Çalıştırılırken Argüman Verildi Mi?}
     B --> |Verildi| C[[Argümanlardaki ürün kodlarını al]]
     C --> D[Lego Store Türkiye'yi Kontrol Et]
+    D --> L[Çıktıyı konsola yazdır]
+    L --> M[Bitir]
     B --> |Verilmedi, sunucuyu başlat| E[Sunucu]
+    E --> G[Kontrol zamanının gelmesini bekle]
     F[Kullanıcı] --> |/subscribe| E
     E --> |/subscribe| I[(Veritabanı)]
-    E --> G[Kontrol zamanının gelmesini bekle]
-    G --> H[Abonelerden izleme listesi için ürün kodlarını al]
-    H --> D
-    D --> |Sunucu modundaysa| J[Aboneleri Al]
-    I --> J
-    J --> K[Her abone için istedikleri ürün stokta ise bildirim gönder]
-    K --> G
-    D --> |Sunucu modunda değilse| L[Çıktıyı konsola yazdır]
-    L --> M[Bitir]
+    G --> J[Abonelerden izleme listesi için ürün kodlarını al]
+    I --> |getSubscribers| J
+    N --> G
+    J --> N[Lego Store Türkiye'yi Kontrol Et]
 ```
 ### Veritabanı ve Kullanıcı Etkileşimi
 ```mermaid
