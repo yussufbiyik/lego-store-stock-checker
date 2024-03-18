@@ -22,7 +22,7 @@ graph TD;
     D --> |Sunucu modundaysa| J[Her abone için istedikleri ürün stokta ise bildirim gönder]
     J --> G
 ```
-### Verittabanı ve Kullanıcı Etkileşimi
+### Veritabanı ve Kullanıcı Etkileşimi
 ```mermaid
 sequenceDiagram
     actor Kullanıcı
