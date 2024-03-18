@@ -19,7 +19,7 @@ initializeExpressServer();
 initializeWebpush();
 // Schedule the task
 const cron = require('node-cron');
-cron.schedule("*/10 * * * * *", async () => {
+cron.schedule(process.env.CRON_INTERVAL, async () => {
     // Get subscribers and their watchlists
     const subscribers = await getSubscribers();
     const everySubscriberWatchlist = subscribers.map(subscriber => subscriber.watchlist.split(",")).flat();
