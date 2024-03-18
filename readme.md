@@ -23,7 +23,8 @@ graph TD;
     I --> J
     J --> K[Her abone için istedikleri ürün stokta ise bildirim gönder]
     K --> G
-    D --> |Sunucu modunda değilse| L[Bitir]
+    D --> |Sunucu modunda değilse| L[Çıktıyı konsola yazdır]
+    L --> M[Bitir]
 ```
 ### Veritabanı ve Kullanıcı Etkileşimi
 ```mermaid
