@@ -89,7 +89,7 @@ Change all the values.
 ## Using as a Server
 Watchlist is constructed by itrating over all subscribers and pushing their watchlist to an array and flattening it later.
 
-The way the cron job is scheduled is assigned to CRON_INTERVAL in the `.env` file, [Refer](https://www.npmjs.com/package/node-cron#cron-syntax) to here to change thee interval as you wish.
+The way the cron job is scheduled is assigned to CRON_INTERVAL in the `.env` file, [Refer](https://www.npmjs.com/package/node-cron#cron-syntax) to here to change the interval as you wish.
 Default is once every 4 hours. 
 
 Run
