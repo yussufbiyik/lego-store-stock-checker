@@ -50,7 +50,7 @@ sequenceDiagram
     Server-->>Subscriber: Result(JSON)
 ```
 
-## Özellikler
+## Features
 - [CLI Mode](https://github.com/yussufbiyik/lego-store-stock-checker?tab=readme-ov-file#using-cli)
 - [Server Mode](https://github.com/yussufbiyik/lego-store-stock-checker?tab=readme-ov-file#using-as-a-server)
     - Scheduled cron jobs to check the stock in regular intervals
@@ -113,11 +113,11 @@ $ npm start <KEYCHAIN_CODE> <KEYCHAIN_CODE>
 ISC
 
 ## TODOs
-- [X] Stok oldukça cihaza bildirim gönderme
-- [X] JWT ile ~~sadece sunucuyu kuran kişinin servise erişmesini~~ çoklu kullanıcı erişimi sağlama (aslında hiç gerek yok da, JWT kullanmak istedim.)
-- [X] Dotenv ile önemli bilgilerin gizliliğini sağlama
-- [ ] Firebase üzerinde çalıştırılabilecek hale getirme
-- [X] readme dosyasında kullanım üzerine daha fazla detay verme
+- [X] Send push notifications when a product is in stock
+- [X] Add multiple user support with JWT
+- [X] Hide juicy data from public using dotenv
+- [ ] Running on firebase?
+- [X] Update readme.md with more details
 
 ## Screenshots
 ![Her ürünü kontrol ederse.](screenshots/cli.png)
