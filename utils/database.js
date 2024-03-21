@@ -6,7 +6,7 @@ const db = new sqlite.Database(path.resolve(__dirname, '../server/database/datab
 function flushDatabase() {
     db.serialize(() => {
         db.run("DROP TABLE IF EXISTS subscribers");
-        db.run("CREATE TABLE subscribers (username, password, role, subscription, token, watchlist)");
+        db.run("CREATE TABLE subscribers (id INTEGER PRIMARY KEY, username, password, role, subscription, token, watchlist)");
     });
 }
 
