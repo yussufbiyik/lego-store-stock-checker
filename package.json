@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "flushDb": "node ./utils/database.js flush",
-    "createVAPID": "node ./utils/webpush.js create"
+    "flushDb": "node ./server/helpers/databaseHelper.js flush",
+    "createVAPID": "node ./server/helpers/webpush.js create"
   },
   "author": "Yusuf Bıyık",
   "license": "ISC",

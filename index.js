@@ -11,9 +11,9 @@ if(args.length != 0) {
     return;
 }
 // If no arguments are given, start the server and check the watchlist periodically
-const { getSubscribers } = require('./utils/database.js');
+const { getSubscribers } = require('./server/helpers/databaseHelper.js');
 const { initializeExpressServer } = require("./server/server.js");
-const { initializeWebpush, createNotification, sendNotification } = require("./utils/webpush.js");
+const { initializeWebpush, createNotification, sendNotification } = require("./server/helpers/webpushHelper.js");
 console.log("Herhangi bir argüman verilmedi, program izleme listesini kontrol etme modunda çalışıyor.");
 initializeExpressServer();
 initializeWebpush();

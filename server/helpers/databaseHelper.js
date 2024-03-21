@@ -1,7 +1,7 @@
 const path = require('path');
-const { hashPassword, generateAccessToken } = require('./auth');
+const { hashPassword, generateAccessToken } = require('./authHelper');
 const sqlite = require('sqlite3').verbose();
-const db = new sqlite.Database(path.resolve(__dirname, '../server/database/database.db'), sqlite.OPEN_READWRITE, (err) => {if (err) return console.error(err);});
+const db = new sqlite.Database(path.resolve(__dirname, "../database/database.db"), sqlite.OPEN_READWRITE, (err) => {if (err) return console.error(err);});
 
 function flushDatabase() {
     db.serialize(() => {
@@ -45,4 +45,4 @@ function getSubscribers() {
     });
 }
 
-module.exports = { db, flushDatabase, addSubscriber, getSubscribers };
+module.exports = { addSubscriber, getSubscribers };

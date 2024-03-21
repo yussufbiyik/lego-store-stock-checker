@@ -1,9 +1,9 @@
 const express = require('express');
-const { validateToken } = require('../../../utils/auth');
+const { validateToken } = require('../../helpers/authHelper');
 const { checkKeychains } = require('../../../utils/keychains');
-const apiRoutes = express.Router();
+const keychainRoutes = express.Router();
 
-apiRoutes.get('/check', async (req, res) => {
+keychainRoutes.get('/check', async (req, res) => {
     validateToken(req, res, () => {
         checkKeychains(req.query.keychainCodes).then((results) => {
             res.json(results);
@@ -11,4 +11,4 @@ apiRoutes.get('/check', async (req, res) => {
     });
 });
 
-module.exports = apiRoutes;
+module.exports = keychainRoutes;
