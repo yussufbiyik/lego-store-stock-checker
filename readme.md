@@ -30,7 +30,7 @@ graph TD;
     G --> J[Get keychain codes from subscribers' watchlists]
     I --> |getSubscribers| J
     J --> N[Check Lego Store Turkey]
-    N --> K[Iterate through subscribers and send notifications to each hat are looking for a product on the list]
+    N --> K[Iterate through subscribers and send notifications to each that are looking for a product on the list]
     K --> G
     end
     end
