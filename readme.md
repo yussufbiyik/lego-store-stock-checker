@@ -104,7 +104,7 @@ You'll be greeted by the register page if you visit `localhost:PORT`*, you can r
 *: PORT, is determined in `.env` file, default is 3000
 
 ## Using CLI
-If you don't want need scheduled checks, just use this in the following format (pass 0 as keychain code to get all the keychains):
+If you don't want to run scheduled checks, just use it in the following format (pass 0 as keychain code to get all the keychains):
 ```bash
 $ npm start <KEYCHAIN_CODE> <KEYCHAIN_CODE>
 ``` 
