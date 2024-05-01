@@ -69,7 +69,7 @@ Run
 ```bash
 $ npm run createVAPID
 ```
-command on terminal al save the response, the `PUBLIC_VAPID_KEY` and `PRIVATE_VAPID_KEY` values in `.env` comes from here.
+command on terminal save the response, the `PUBLIC_VAPID_KEY` and `PRIVATE_VAPID_KEY` values in `.env` comes from here.
 
 ### Creating .env File
 ```env
