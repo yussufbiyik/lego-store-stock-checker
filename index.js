@@ -36,7 +36,7 @@ cron.schedule(process.env.CRON_INTERVAL || "0 */4 * * *", async () => {
     subscribers.forEach(subscriber => {
         // Return if the subscriber's watchlist does not include any of the products in stock
         if(!results.some(result=>subscriber.watchlist.includes(result["Kod"]))) return;
-        watchedProducts = results.filter(result=>subscriber.watchlist.includes(result["Kod"])).map(result=>result["İsim"]);
+        const watchedProducts = results.filter(result=>subscriber.watchlist.includes(result["Kod"])).map(result=>result["İsim"]);
         try {
             sendNotification(
                 JSON.parse(subscriber.subscription), 
