@@ -119,6 +119,7 @@ ISC
 - [ ] Running on firebase?
 - [X] Update readme.md with more details
 
-## Screenshots
+## Screenshots & Proof
 ![Her ürünü kontrol ederse.](screenshots/cli.png)
 ![Sunucu tarafından ekran görüntüsü.](screenshots/serverside.png)
+<img width="2252" height="3001" alt="20240328_140023(1) (1)" src="https://github.com/user-attachments/assets/861a1040-45ea-4023-a858-a20d75d77d65" />
